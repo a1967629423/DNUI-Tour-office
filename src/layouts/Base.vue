@@ -1,30 +1,44 @@
 <template lang="pug">
-.base-container
-  el-menu.el-menu-top(mode="horizontal", :router="true")
-    router-link(to="/")
-      li.nav-title DNUI-Tour
-    el-menu-item(index="select-project", :route="{ name: 'select-project' }") Dashboard
-    el-menu-item(index="account", :route="{ name: 'account' }") 账户
-    el-submenu(style="float:right",index="setting")
-      template(slot='title')
-        span User
-      el-menu-item(index="logout", :route="{ name: 'logout' }") 退出
-  .container
-    .project-content(style="margin: 20px;")
-      router-view()
+el-container.base-container
+  el-header.base-header
+    h1 DNUI-Tour
+  el-container
+    el-aside
+      el-menu(:router="true",:default-active='defaultActive', style='min-height: 100%;', theme='dark', router='')
+        el-menu-item(index='manage',:route="{ path: '/' }")
+          i.el-icon-menu
+          | Dashboard
+        el-submenu(index='2')
+          template(slot='title')
+            i.el-icon-document
+            | 地点
+          el-menu-item(index='siteList',:route="{ path: '/site' }") 地点列表
+          el-menu-item(index='siteList',:route="{ path: '/site' }") 添加地点
+        el-submenu(index='3')
+          template(slot='title')
+            i.el-icon-plus
+            | 添加数据
+          el-menu-item(index='addShop') 添加商铺
+    el-main
+      .container
+        .project-content(style="margin: 20px;")
+          router-view()
 </template>
 
 <style>
-.nav-title {
-  font-size: 20px;
-  float: left;
-  height: 60px;
-  line-height: 60px;
-  padding: 0 32px;
-  outline: none;
-  color: #333;
+body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, li, a, p, h1, h2, h3, h4,h5, h6, i, b, textarea, button, input, select, figure, figcaption {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-style: normal;
+    text-decoration: none;
+    border: none;
+    font-family: "Microsoft Yahei",sans-serif;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-font-smoothing: antialiased;
 }
-.nav-title:hover{
-  color: #409EFF;
+.base-header{
+  background-color: #2e2e2e;
+  color: #fff;
 }
 </style>

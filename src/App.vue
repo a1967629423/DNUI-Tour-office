@@ -11,10 +11,6 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Helvetica, sans-serif;
-  text-align: center;
-}
 body{
   background-color: #eee;
 }

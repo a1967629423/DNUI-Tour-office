@@ -21,6 +21,11 @@ let routes = [
             import('./containers/Index.vue'),
         },
         {
+          path: '/site',
+          component: async () =>
+            import('./containers/SiteList.vue'),
+        },
+        {
           path: '/404',
           component: async () =>
             import('./containers/404.vue'),
