@@ -15,6 +15,7 @@
     el-dialog(
       title='添加地点', 
       :visible.sync="showEditSiteDialog", 
+      v-if="showEditSiteDialog",
       width='80%', 
       :before-close='handleEditSiteDialogClose'
       :append-to-body='true'
@@ -35,12 +36,13 @@ export default {
   data: function() {
     return { 
       showEditSiteDialog: false,
-      sites: [] 
+      sites: [],
+      selectedSiteId: null
     };
   },
   methods: {
     loadSite: async function() {
-      let sites = (await ApiServices.authedRequest(this).get('/api/manage/site/')).data
+      this.sites = (await ApiServices.authedRequest(this).get('/api/manage/site/')).data
     },
     handleEditSiteDialogClose: async function(){
       this.showEditSiteDialog = false;
