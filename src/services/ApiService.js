@@ -1,8 +1,9 @@
 import axios from 'axios'
 
-const API_BASEURL = 'http://localhost:8687/api/'
+const API_BASEURL = 'http://localhost:8687/'
 
 let getUser = function () { 
+  if(!localStorage || !localStorage.session || !localStorage.user) return null
   return {
     session: JSON.parse(localStorage.session),
     user: JSON.parse(localStorage.user),
@@ -58,6 +59,14 @@ let request = function(_this){
 
 
 let authedRequest = function(_this){
+  if(!getUser()){
+    _this.$notify({
+      title: '需要登陆',
+      message: '登陆已过期或登陆失效，请重新登陆',
+      type: 'warning'
+    });
+    _this.$router.push({path: '/login'})
+  }
   let inst = axios.create({
     baseURL: API_BASEURL,
     timeout: 2000,
@@ -71,10 +80,12 @@ let authedRequest = function(_this){
     const h = _this.$createElement;
     console.warn(error)
     if(error.response.status == 403){
-      _this.$msgbox({
-        title: '需要登陆后访问！',
-        confirmButtonText: '确定',
-      })
+      _this.$notify({
+        title: '需要登陆',
+        message: '登陆已过期或登陆失效，请重新登陆',
+        type: 'warning'
+      });
+      _this.$router.push({path: '/login'})
     }
     if(error.response.status == 500){
       _this.$msgbox({
@@ -82,7 +93,8 @@ let authedRequest = function(_this){
         message: h('div', null, [
           h('p', null, error.response.data.name),
           h('p', null, error.response.data.message),
-          h('pre', { style: 'color: teal;overflow:auto;' }, error.response.data.stack)
+          h('pre', { style: 'color: teal;overflow:auto;' }, error.response.data.stack),
+          h('pre', { style: 'color: teal;overflow:auto;' }, error.response.data)
         ]),
         confirmButtonText: '确定',
       })

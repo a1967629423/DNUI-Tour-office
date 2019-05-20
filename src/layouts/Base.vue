@@ -13,7 +13,6 @@ el-container.base-container
             i.el-icon-document
             | 地点
           el-menu-item(index='siteList',:route="{ path: '/site' }") 地点列表
-          el-menu-item(index='siteList',:route="{ path: '/site' }") 添加地点
         el-submenu(index='3')
           template(slot='title')
             i.el-icon-plus
@@ -38,7 +37,20 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
     -webkit-font-smoothing: antialiased;
 }
 .base-header{
-  background-color: #2e2e2e;
+  background-color: #409EFF;
   color: #fff;
+  line-height: 60px;
+}
+.page-main{
+  background: #fff;
+  padding: 20px;
+}
+.page-header{
+  line-height: 40px;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+.page-header .right{
+  text-align: right;
 }
 </style>
