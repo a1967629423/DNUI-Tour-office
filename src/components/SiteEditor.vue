@@ -3,6 +3,8 @@
     el-form(ref='form', :model='site', label-width='80px')
       el-form-item(label='地点名称')
         el-input(v-model='site.name')
+      el-form-item(label='地点链接')
+        el-input(v-model='site.link')
       el-form-item(label='地点描述')
         el-input(type='textarea', :rows='2', placeholder='请输入内容', v-model='site.description')
       el-form-item(label='坐标地点')
@@ -15,6 +17,17 @@
             el-input(v-model='site.lng')
       el-form-item(label='地点详情')
         el-input(type='textarea', :rows='2', placeholder='请输入内容', v-model='site.content')
+      el-form-item(label='地点图片')
+        el-button(plain,@click="addImage") 添加图片
+        el-row.item(v-for="(img,index) in site.images")
+          el-col(:span="12")
+            el-input(v-model='site.images[index]')
+          el-col(:span="6")
+            el-button(type='danger', icon='el-icon-delete', circle='',@click="delImage(index)")
+      el-form-item(label='地点音频')
+        el-input(v-model='site.soundLink')
+      el-form-item(label='地点全景照片')
+        el-input(v-model='site.panoramaLink')
       el-form-item
         el-button(type='primary', @click='save') 保存
         el-button(@click='handleClose') 取消
@@ -40,19 +53,28 @@ export default {
   data: function() {
     return { 
       site: {
-        sort: 0,
+        link: '',
         name: '',
         description: '',
         //geohash: '',
         lat: 0,
         lng: 0,
         content: '',
-        views: 0
+        views: 0,
+        images: [],
+        soundLink: '',
+        panoramaLink: ''
       },
       showMapComponent: false
     };
   },
   methods: {
+    addImage: async function(){
+      return this.site.images.push('')
+    },
+    delImage: async function(i){
+      this.site.images.splice(i,1);
+    },
     loadSite: async function(siteId) {
       this.site = (await ApiServices.authedRequest(this).get(`/api/manage/site/${siteId}`)).data
     },
