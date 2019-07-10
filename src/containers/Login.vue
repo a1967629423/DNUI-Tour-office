@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     async doLogin() {
-        let response = (await ApiService.request(this).post('/user/login',{
+        let response = (await ApiService.request(this).post('api/user/login',{
           username: this.form.username,
           password: this.form.password
         })).data

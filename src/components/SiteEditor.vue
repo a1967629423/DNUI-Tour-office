@@ -76,7 +76,8 @@ export default {
       this.site.images.splice(i,1);
     },
     loadSite: async function(siteId) {
-      this.site = (await ApiServices.authedRequest(this).get(`/api/manage/site/${siteId}`)).data
+      var data = (await ApiServices.authedRequest(this).get(`/api/manage/site/${siteId}`)).data
+      this.site = data;
     },
     selectedMapLocation: function(location){
       this.site.lat = location.lat
