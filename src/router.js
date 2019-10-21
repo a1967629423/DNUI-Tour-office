@@ -30,6 +30,16 @@ let routes = [
           component: async () =>
             import('./containers/404.vue'),
         },
+        {
+          path:'/image',
+          component:async ()=>
+          import('./containers/image.vue'),
+        },
+        {
+          path:'/audio',
+          component:async ()=>
+          import('./containers/audio.vue'),
+        }
       ]
     },
     {

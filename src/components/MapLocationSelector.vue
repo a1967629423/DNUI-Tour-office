@@ -6,14 +6,15 @@
 <template>
   <div>
     <Modal @on-cancel="cancel" v-model="showMapComponent" width="800" :closable="false" :mask-closable="false">
-      <baidu-map v-bind:style="mapStyle" class="bm-view" ak="64665E5BCEdfb17ec826f5f890f07c57"
+      <baidu-map  v-bind:style="mapStyle" class="bm-view" ak="64665E5BCEdfb17ec826f5f890f07c57"
       :center="center" 
       :zoom="zoom" 
       :scroll-wheel-zoom="true" 
       @click="getClickInfo"
       @moving="syncCenterAndZoom" 
       @moveend="syncCenterAndZoom" 
-      @zoomend="syncCenterAndZoom">
+      @zoomend="syncCenterAndZoom"
+      @ready="ready">
         <bm-view style="width: 100%; height:500px;"></bm-view>
         <bm-marker :position="{lng: center.lng, lat: center.lat}" :dragging="true">
         </bm-marker>
@@ -69,6 +70,10 @@
       mapHeight: {
         type: Number,
         default: 500
+      },
+      nPosition:{
+        lng:Number,
+        lat:Number
       }
     },
     methods: {
@@ -78,6 +83,11 @@
       getClickInfo (e) {
         this.center.lng = e.point.lng
         this.center.lat = e.point.lat
+        
+      },
+      ready({ BMap, map }){
+        this.center.lng = this.nPosition.lng;
+        this.center.lat = this.nPosition.lat;
       },
       syncCenterAndZoom (e) {
         const {lng, lat} = e.target.getCenter()

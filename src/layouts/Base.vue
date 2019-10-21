@@ -17,7 +17,8 @@ el-container.base-container
           template(slot='title')
             i.el-icon-plus
             | 添加数据
-          el-menu-item(index='addShop') 添加商铺
+          el-menu-item(index='addImage',:route="{path:'/image'}") 添加图片
+          el-menu-item(index='addAudio',:route="{path:'/audio'}") 添加音频
     el-main
       .container
         .project-content(style="margin: 20px;")
@@ -41,6 +42,7 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   color: #fff;
   line-height: 60px;
 }
+
 .page-main{
   background: #fff;
   padding: 20px;

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API_BASEURL = 'http://localhost:8687/'
-
+//const API_BASEURL = 'http://tour.neusoft.edu.cn/'
+const API_BASEURL = 'http://127.0.0.1:8687/'
 let getUser = function () { 
   if(!localStorage || !localStorage.session || !localStorage.user) return null
   return {
@@ -41,6 +41,16 @@ let request = function(_this){
         confirmButtonText: '确定',
       })
     }
+    if(error.response.status == 401)
+    {
+      logout();
+      _this.$notify({
+        title: '需要登陆',
+        message: '登陆已过期或登陆失效，请重新登陆',
+        type: 'warning'
+      });
+      _this.$router.push({path: '/login'})
+    }
     if(error.response.status == 500){
       _this.$msgbox({
         title: 'Oops，服务器返回500错误！',
@@ -58,7 +68,7 @@ let request = function(_this){
 }
 
 
-let authedRequest = function(_this){
+let authedRequest = function(_this,timeout=50000){
   if(!getUser()){
     _this.$notify({
       title: '需要登陆',
@@ -69,7 +79,7 @@ let authedRequest = function(_this){
   }
   let inst = axios.create({
     baseURL: API_BASEURL,
-    timeout: 2000,
+    timeout: timeout,
     headers: {'X-Admin-Token': getUser().session.token}
   });
   inst.interceptors.response.use(function (response) {
@@ -78,8 +88,7 @@ let authedRequest = function(_this){
   }, function (error) {
     // 对响应错误做点什么
     const h = _this.$createElement;
-    console.warn(error)
-    if(error.response.status == 403){
+    if(error.response.status == 401){
       _this.$notify({
         title: '需要登陆',
         message: '登陆已过期或登陆失效，请重新登陆',
@@ -98,6 +107,8 @@ let authedRequest = function(_this){
         ]),
         confirmButtonText: '确定',
       })
+    console.warn(error)
+
     }
     return Promise.reject(error);
   });
