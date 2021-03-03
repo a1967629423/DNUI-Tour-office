@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.3.4",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "vue": "^2.5.16",
     "vue-baidu-map": "^0.21.20",
     "vue-router": "^3.0.2",
